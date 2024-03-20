@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Model>
+
+@{
+    ViewData["Title"] = "Index";
+    var brandId = ViewBag.BrandId;
+    var brandName = ViewBag.BrandName;
+    var noModels = ViewBag.NoModels;
+}
+
+<h1>Models</h1>
+
+@if (noModels)
+{
+    <p>No models found for the brand @brandName.</p>
+    <p>
+        <a asp-action="Create" asp-route-brandId="@brandId">Add New Model for @brandName</a>
+    </p>
+}
+else
+{
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().Brand.Name)
+                </th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Brand.Name)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.ModelId">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.ModelId">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.ModelId">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
